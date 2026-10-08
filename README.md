@@ -162,3 +162,70 @@ The LLM API key remains on the backend and is not exposed inside the Chrome exte
 
 ```bash
 git clone https://github.com/Shambhavi-Bhalekar/course-recommendor-extension.git
+```
+
+## 2. Add the Extension to Chrome
+
+After cloning the repository, open Google Chrome and go to:
+
+```text
+chrome://extensions
+```
+
+Enable **Developer mode** using the toggle in the top-right corner.
+
+Then click:
+
+```text
+Load unpacked
+```
+
+Navigate to the cloned project folder:
+
+```text
+course-recommendor-extension/
+```
+
+Select the **root folder of the project**, which contains:
+
+```text
+course-recommendor-extension/
+│
+├── manifest.json
+├── sidepanel.html
+├── sidepanel.js
+├── background.js
+├── courses.js
+├── courseData.js
+├── llmClient.js
+├── llmQuery.js
+├── profileStore.js
+├── quickCapture.js
+├── askNext.js
+├── coursePlanning.js
+├── shortlistFeatures.js
+├── export.js
+├── qa.js
+│
+└── backend/
+    ├── server.js
+    ├── package.json
+    └── package-lock.json
+```
+
+> **Important:** Select the `course-recommendor-extension` folder, **not** the `backend` folder.
+
+Chrome will then add **Course Copilot for Counsellors** to the extensions list.
+
+
+## 3. Open Course Copilot
+
+After the extension is loaded:
+
+1. Open Chrome.
+2. Click the **Extensions** icon.
+3. Find **Course Copilot for Counsellors**.
+4. Open the extension.
+5. Open the Course Copilot side panel.
+
+The extension can now be used alongside Google Meet during counselling sessions.
