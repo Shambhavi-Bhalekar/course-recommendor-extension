@@ -3,8 +3,7 @@
 (function () {
 
   const CONFIG = {
-    API_URL:
-      "http://localhost:3000/api/course-copilot",
+      "API_URL": "https://course-recommendor-extension.onrender.com/api/course-copilot",
 
     REQUEST_TIMEOUT: 30000
   };
