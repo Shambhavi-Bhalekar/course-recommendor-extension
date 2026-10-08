@@ -1,0 +1,11 @@
+# Dependencies
+node_modules/
+
+# Environment variables (NEVER commit these — they contain API keys)
+.env
+backend/.env
+
+# OS
+.DS_Store
+Thumbs.db
+

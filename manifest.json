@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Course Copilot for Counsellors",
+  "version": "1.0.0",
+  "description": "Side panel course recommendation assistant for live counselling on Google Meet.",
+  "permissions": ["sidePanel", "storage", "clipboardWrite"],
+  "host_permissions": ["https://meet.google.com/*"],
+  "background": { "service_worker": "background.js" },
+  "side_panel": { "default_path": "sidepanel.html" },
+  "action": { "default_title": "Open Course Copilot" }
+}

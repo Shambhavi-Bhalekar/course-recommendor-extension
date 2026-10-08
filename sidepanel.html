@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+
+  <title>Course Copilot</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+  <style>
+
+    :root {
+
+      box-sizing: border-box;
+
+      padding-top: env(safe-area-inset-top, 0px);
+
+      padding-bottom: env(safe-area-inset-bottom, 0px);
+
+      --bg: #f6f7f9;
+
+      --card: #ffffff;
+
+      --tx: #1b1f27;
+
+      --mu: #667085;
+
+      --bd: #e3e6ec;
+
+      --ac: #2f6df6;
+
+      --ac-hover: #1e58db;
+
+      --ok: #12805c;
+
+      --wn: #b45309;
+
+      --bad: #c0392b;
+
+      --chip: #eef2ff;
+
+    }
+
+
+
+    @media (prefers-color-scheme: dark) {
+
+      :root:not([data-theme="light"]) {
+
+        --bg: #14161b;
+
+        --card: #1d2027;
+
+        --tx: #e8eaef;
+
+        --mu: #9aa3b2;
+
+        --bd: #2c313b;
+
+        --ac: #6b94ff;
+
+        --ac-hover: #8ba9ff;
+
+        --ok: #3ccf9a;
+
+        --wn: #f0a64a;
+
+        --bad: #ef7b6e;
+
+        --chip: #252b3d;
+
+      }
+
+    }
+
+
+
+    :root[data-theme="dark"] {
+
+      --bg: #14161b;
+
+      --card: #1d2027;
+
+      --tx: #e8eaef;
+
+      --mu: #9aa3b2;
+
+      --bd: #2c313b;
+
+      --ac: #6b94ff;
+
+      --ac-hover: #8ba9ff;
+
+      --ok: #3ccf9a;
+
+      --wn: #f0a64a;
+
+      --bad: #ef7b6e;
+
+      --chip: #252b3d;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       BASE
+
+    -------------------------------------------------- */
+
+    html {
+
+      scroll-padding-top: env(safe-area-inset-top, 0px);
+
+    }
+
+
+
+    * {
+
+      box-sizing: border-box;
+
+    }
+
+
+
+    body {
+
+      margin: 0;
+
+      background: var(--bg);
+
+      color: var(--tx);
+
+      font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    }
+
+
+
+    .panel {
+
+      max-width: 440px;
+
+      margin: 0 auto;
+
+      padding: 12px;
+
+    }
+
+
+
+    h1 {
+
+      font-size: 16px;
+
+      margin: 0 0 2px;
+
+      font-weight: 700;
+
+    }
+
+
+
+    .sub {
+
+      color: var(--mu);
+
+      font-size: 12px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+
+    .card {
+
+      background: var(--card);
+
+      border: 1px solid var(--bd);
+
+      border-radius: 10px;
+
+      padding: 10px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+
+    label {
+
+      font-size: 11px;
+
+      color: var(--mu);
+
+      display: block;
+
+      margin-bottom: 2px;
+
+    }
+
+
+
+    input,
+
+    select,
+
+    textarea {
+
+      width: 100%;
+
+      padding: 7px;
+
+      border: 1px solid var(--bd);
+
+      border-radius: 7px;
+
+      background: var(--bg);
+
+      color: var(--tx);
+
+      font: inherit;
+
+    }
+
+
+
+    input:focus,
+
+    select:focus,
+
+    textarea:focus {
+
+      outline: none;
+
+      border-color: var(--ac);
+
+    }
+
+
+
+    .row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 8px;
+
+    }
+
+
+
+    .g {
+
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 8px;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       BUTTONS & CHIPS
+
+    -------------------------------------------------- */
+
+    button {
+
+      font: inherit;
+
+      cursor: pointer;
+
+    }
+
+
+
+    .btn,
+
+    .primary {
+
+      background: var(--ac);
+
+      color: #fff;
+
+      border: 0;
+
+      border-radius: 8px;
+
+      padding: 7px 12px;
+
+      font-weight: 600;
+
+      transition: background 0.15s;
+
+    }
+
+
+
+    .btn:hover,
+
+    .primary:hover {
+
+      background: var(--ac-hover);
+
+    }
+
+
+
+    .btn:disabled,
+
+    .primary:disabled {
+
+      opacity: 0.6;
+
+      cursor: not-allowed;
+
+    }
+
+
+
+    .chips {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      gap: 5px;
+
+      margin-top: 4px;
+
+    }
+
+
+
+    .chip {
+
+      border: 1px solid var(--bd);
+
+      background: var(--card);
+
+      color: var(--tx);
+
+      border-radius: 99px;
+
+      padding: 3px 10px;
+
+      font-size: 12px;
+
+      cursor: pointer;
+
+      transition: background 0.15s, color 0.15s;
+
+    }
+
+
+
+    .chip.on {
+
+      background: var(--ac);
+
+      color: #fff;
+
+      border-color: var(--ac);
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       TABS
+
+    -------------------------------------------------- */
+
+    .tabs {
+
+      display: flex;
+
+      gap: 4px;
+
+      margin-bottom: 10px;
+
+    }
+
+
+
+    .tabs button {
+
+      flex: 1;
+
+      padding: 7px;
+
+      border: 1px solid var(--bd);
+
+      background: var(--card);
+
+      color: var(--tx);
+
+      border-radius: 8px;
+
+      transition: background 0.15s, color 0.15s;
+
+    }
+
+
+
+    .tabs button.on {
+
+      background: var(--ac);
+
+      color: #fff;
+
+      border-color: var(--ac);
+
+      font-weight: 600;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       SCORE BAR & STARS
+
+    -------------------------------------------------- */
+
+    .bar {
+
+      height: 6px;
+
+      background: var(--bd);
+
+      border-radius: 9px;
+
+      overflow: hidden;
+
+    }
+
+
+
+    .bar i {
+
+      display: block;
+
+      height: 100%;
+
+      background: var(--ac);
+
+    }
+
+
+
+    .star {
+
+      background: none;
+
+      border: 0;
+
+      font-size: 18px;
+
+      color: var(--mu);
+
+      cursor: pointer;
+
+      line-height: 1;
+
+      padding: 2px 4px;
+
+    }
+
+
+
+    .star.on {
+
+      color: #e0a800;
+
+    }
+
+
+
+    .m {
+
+      font-weight: 700;
+
+      font-size: 18px;
+
+      color: var(--ac);
+
+    }
+
+
+
+    .mu {
+
+      color: var(--mu);
+
+      font-size: 12px;
+
+    }
+
+
+
+    .ok {
+
+      color: var(--ok);
+
+    }
+
+
+
+    .wn {
+
+      color: var(--wn);
+
+    }
+
+
+
+    .bad {
+
+      color: var(--bad);
+
+    }
+
+
+
+    ul {
+
+      margin: 4px 0 0;
+
+      padding-left: 16px;
+
+    }
+
+
+
+    li {
+
+      margin: 1px 0;
+
+      font-size: 12.5px;
+
+    }
+
+
+
+    details summary {
+
+      cursor: pointer;
+
+      color: var(--mu);
+
+      font-size: 12px;
+
+      user-select: none;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       QUICK CAPTURE RESULT
+
+    -------------------------------------------------- */
+
+    .capture-result {
+
+      display: none;
+
+      margin-top: 8px;
+
+      padding: 8px;
+
+      border-radius: 8px;
+
+      background: var(--chip);
+
+      border: 1px solid var(--bd);
+
+    }
+
+
+
+    .capture-result.show {
+
+      display: block;
+
+    }
+
+
+
+    .capture-result .title {
+
+      font-weight: 700;
+
+      margin-bottom: 3px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+    }
+
+
+
+    .undo {
+
+      background: none;
+
+      border: 0;
+
+      color: var(--ac);
+
+      padding: 0;
+
+      margin-left: 6px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       ASK NEXT
+
+    -------------------------------------------------- */
+
+    .ask-next-card {
+
+      border-left: 3px solid var(--wn);
+
+    }
+
+
+
+    .ask-next-label {
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      color: var(--wn);
+
+      margin-bottom: 5px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.3px;
+
+    }
+
+
+
+    .ask-next-question {
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      line-height: 1.4;
+
+      margin-bottom: 5px;
+
+    }
+
+
+
+    .ask-next-reason {
+
+      color: var(--mu);
+
+      font-size: 12px;
+
+      line-height: 1.4;
+
+    }
+
+
+
+    .ask-next-actions {
+
+      display: flex;
+
+      gap: 6px;
+
+      margin-top: 9px;
+
+    }
+
+
+
+    .ask-next-actions .btn {
+
+      flex: 1;
+
+    }
+
+
+
+    .ask-next-skip {
+
+      background: var(--card);
+
+      color: var(--mu);
+
+      border: 1px solid var(--bd);
+
+      border-radius: 8px;
+
+      padding: 7px 12px;
+
+      cursor: pointer;
+
+    }
+
+
+
+    .ask-next-option {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 8px;
+
+      padding: 7px 0;
+
+      border-bottom: 1px solid var(--bd);
+
+    }
+
+
+
+    .ask-next-option:last-child {
+
+      border-bottom: 0;
+
+    }
+
+
+
+    .ask-next-use {
+
+      flex-shrink: 0;
+
+      background: var(--card);
+
+      color: var(--ac);
+
+      border: 1px solid var(--ac);
+
+      border-radius: 7px;
+
+      padding: 4px 9px;
+
+      font-size: 12px;
+
+      cursor: pointer;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       COURSE DATA STATUS
+
+    -------------------------------------------------- */
+
+    .data-status-card {
+
+      padding: 8px 10px;
+
+    }
+
+
+
+    .data-status-card .ok {
+
+      font-weight: 600;
+
+      color: var(--ok);
+
+    }
+
+
+
+    .data-status-card .warning {
+
+      color: var(--wn);
+
+      font-weight: 600;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       AI GROUNDED Q&A
+
+    -------------------------------------------------- */
+
+    .llm-card {
+
+      margin-top: 10px;
+
+    }
+
+
+
+    .llm-description {
+
+      margin-top: 5px;
+
+      line-height: 1.4;
+
+    }
+
+
+
+    .llm-conversation {
+
+      margin-top: 10px;
+
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 8px;
+
+      max-height: 380px;
+
+      overflow-y: auto;
+
+    }
+
+
+
+    .llm-empty {
+
+      padding: 12px;
+
+      border: 1px dashed var(--bd);
+
+      border-radius: 10px;
+
+      background: var(--bg);
+
+    }
+
+
+
+    .llm-empty-title {
+
+      font-weight: 600;
+
+      margin-bottom: 4px;
+
+    }
+
+
+
+    .llm-message {
+
+      padding: 9px 10px;
+
+      border-radius: 10px;
+
+      line-height: 1.45;
+
+      font-size: 13px;
+
+    }
+
+
+
+    .llm-message.user {
+
+      background: var(--chip);
+
+      border: 1px solid var(--bd);
+
+      margin-left: 18px;
+
+    }
+
+
+
+    .llm-message.assistant {
+
+      background: var(--card);
+
+      border: 1px solid var(--bd);
+
+    }
+
+
+
+    .llm-answer {
+
+      white-space: pre-wrap;
+
+      word-break: break-word;
+
+    }
+
+
+
+    .llm-loading {
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 7px;
+
+      color: var(--mu);
+
+    }
+
+
+
+    .llm-dot {
+
+      width: 6px;
+
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--mu);
+
+      animation: llmPulse 1.2s infinite ease-in-out;
+
+    }
+
+
+
+    .llm-dot:nth-child(2) {
+
+      animation-delay: 0.15s;
+
+    }
+
+
+
+    .llm-dot:nth-child(3) {
+
+      animation-delay: 0.3s;
+
+    }
+
+
+
+    @keyframes llmPulse {
+
+      0%, 80%, 100% {
+
+        opacity: 0.3;
+
+        transform: scale(0.8);
+
+      }
+
+      40% {
+
+        opacity: 1;
+
+        transform: scale(1.1);
+
+      }
+
+    }
+
+
+
+    .llm-input-area {
+
+      margin-top: 10px;
+
+    }
+
+
+
+    .llm-question {
+
+      width: 100%;
+
+      box-sizing: border-box;
+
+      resize: vertical;
+
+      min-height: 58px;
+
+      padding: 9px 10px;
+
+      border: 1px solid var(--bd);
+
+      border-radius: 9px;
+
+      font-family: inherit;
+
+      font-size: 13px;
+
+      outline: none;
+
+      background: var(--bg);
+
+      color: var(--tx);
+
+    }
+
+
+
+    .llm-question:focus {
+
+      border-color: var(--ac);
+
+    }
+
+
+
+    .llm-actions {
+
+      margin-top: 7px;
+
+    }
+
+
+
+    .llm-actions button {
+
+      flex-shrink: 0;
+
+    }
+
+
+
+    .llm-citations {
+
+      margin-top: 9px;
+
+      padding-top: 8px;
+
+      border-top: 1px solid var(--bd);
+
+    }
+
+
+
+    .llm-citation-title {
+
+      font-size: 11px;
+
+      font-weight: 700;
+
+      color: var(--mu);
+
+      margin-bottom: 5px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.03em;
+
+    }
+
+
+
+    .llm-citation {
+
+      padding: 5px 0;
+
+      font-size: 11px;
+
+    }
+
+
+
+    .llm-citation-course {
+
+      font-weight: 600;
+
+    }
+
+
+
+    .llm-citation-source {
+
+      margin-top: 2px;
+
+    }
+
+
+
+    .llm-citation-source a {
+
+      color: var(--ac);
+
+      text-decoration: none;
+
+    }
+
+
+
+    .llm-citation-source a:hover {
+
+      text-decoration: underline;
+
+    }
+
+
+
+    .llm-warning {
+
+      margin-top: 8px;
+
+      padding: 7px 8px;
+
+      border-radius: 7px;
+
+      background: rgba(180, 83, 9, 0.1);
+
+      color: var(--wn);
+
+      font-size: 11px;
+
+    }
+
+
+
+    .llm-error {
+
+      margin-top: 8px;
+
+      padding: 8px;
+
+      border-radius: 8px;
+
+      background: rgba(192, 57, 43, 0.1);
+
+      color: var(--bad);
+
+      font-size: 12px;
+
+    }
+
+
+
+    /* --------------------------------------------------
+
+       SHORTLIST ACTIONS
+
+    -------------------------------------------------- */
+
+    .shortlist-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      margin-bottom: 8px;
+
+      padding: 0 2px;
+
+    }
+
+
+
+    .copy-btn {
+
+      background: var(--chip);
+
+      color: var(--ac);
+
+      border: 1px solid var(--bd);
+
+      border-radius: 6px;
+
+      padding: 5px 10px;
+
+      font-size: 12px;
+
+      font-weight: 600;
+
+      cursor: pointer;
+
+      transition: background 0.15s;
+
+    }
+
+
+
+    .copy-btn:hover {
+
+      border-color: var(--ac);
+
+    }
+
+  
+    .saved-students-card {
+      margin-top: 10px;
+    }
+
+    .saved-students-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .saved-student {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .saved-student:last-child {
+      border-bottom: 0;
+    }
+
+    .saved-student.current,
+    .session-row.current {
+      background: var(--chip);
+      border-radius: 8px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .saved-student-name {
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .saved-current {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 2px 6px;
+      border-radius: 99px;
+      background: var(--ac);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .saved-student-actions {
+      display: flex;
+      gap: 5px;
+      flex-shrink: 0;
+    }
+
+    .saved-action {
+      border: 1px solid var(--bd);
+      background: var(--card);
+      color: var(--ac);
+      border-radius: 6px;
+      padding: 4px 7px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .saved-action:hover {
+      border-color: var(--ac);
+    }
+
+    .saved-action.danger {
+      color: var(--bad);
+    }
+
+    .saved-empty {
+      padding: 8px;
+      border: 1px dashed var(--bd);
+      border-radius: 8px;
+      background: var(--bg);
+    }
+
+    .session-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--bd);
+    }
+
+    .session-row:last-child {
+      border-bottom: 0;
+    }
+
+
+    /* --------------------------------------------------
+       COURSE PLANNING / SCHOLARSHIP / CAREER FEATURES
+    -------------------------------------------------- */
+    .feature-toolbar { display:flex; justify-content:space-between; align-items:center; gap:8px; padding:8px 0; margin-bottom:8px; flex-wrap:wrap; }
+    .feature-actions { display:flex; gap:5px; flex-wrap:wrap; justify-content:flex-end; }
+    .feature-actions .copy-btn { white-space:nowrap; }
+    .feature-panel { background:var(--card); border:1px solid var(--bd); border-radius:10px; padding:10px; margin-bottom:10px; overflow:hidden; }
+    .feature-header { display:flex; justify-content:space-between; align-items:flex-start; gap:8px; margin-bottom:8px; }
+    .feature-header > div:first-child { min-width:0; }
+    .compare-scroll { overflow-x:auto; border:1px solid var(--bd); border-radius:8px; }
+    .compare-table { width:100%; min-width:620px; border-collapse:collapse; font-size:11px; }
+    .compare-table th,.compare-table td { padding:7px; border-bottom:1px solid var(--bd); border-right:1px solid var(--bd); text-align:left; vertical-align:top; }
+    .compare-table tr:last-child th,.compare-table tr:last-child td { border-bottom:0; }
+    .compare-table th:last-child,.compare-table td:last-child { border-right:0; }
+    .compare-table thead th { background:var(--chip); font-weight:700; }
+    .compare-table tbody th { width:120px; background:var(--bg); font-weight:600; }
+    .compare-best { background:rgba(18,128,92,.12); color:var(--ok); font-weight:700; }
+    .cost-row { display:flex; justify-content:space-between; align-items:center; gap:10px; padding:8px; border:1px solid var(--bd); border-radius:8px; margin-top:6px; }
+    .cost-best { border-color:var(--ok); }
+    .cost-total { color:var(--ac); font-weight:800; white-space:nowrap; }
+    .cost-breakdown { color:var(--mu); font-size:11px; padding:4px 8px 7px; }
+    .cost-callout { margin-top:8px; padding:8px; border-radius:8px; background:var(--chip); border:1px solid var(--bd); font-size:12px; }
+    .career-card { border:1px solid var(--bd); border-radius:8px; padding:9px; margin-top:7px; background:var(--bg); }
+    .career-card:first-of-type { margin-top:0; }
+    .career-card a { color:var(--ac); text-decoration:none; font-size:11px; }
+    .career-card a:hover { text-decoration:underline; }
+    @media (max-width:380px) { .feature-toolbar{align-items:flex-start;} .feature-actions{width:100%;justify-content:flex-start;} .feature-actions .copy-btn{flex:1;} }
+
+</style>
+
+</head>
+
+<body>
+
+  <div class="panel">
+
+    <!-- HEADER -->
+
+    <div class="row">
+
+      <div>
+
+        <h1>Course Copilot</h1>
+
+        <div class="sub">Live counselling side panel · prototype</div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- QUICK CAPTURE -->
+
+    <div class="card">
+
+      <label>⚡ Quick capture — type what the student just said</label>
+
+      <div class="row">
+
+        <input
+
+          id="qc"
+
+          type="text"
+
+          autocomplete="off"
+
+          placeholder="e.g. wants masters in data science, 72%, IELTS 6.5, budget 25k, Germany but not UK, Sep"
+
+        >
+
+        <button class="btn" id="qcb" type="button">Add</button>
+
+      </div>
+
+      <div id="captureResult" class="capture-result" aria-live="polite"></div>
+
+    </div>
+
+
+
+    <!-- STUDENT PROFILE -->
+
+    <div class="card">
+
+      <details open>
+
+        <summary>
+
+          Student profile
+
+          <span id="pc"></span>
+
+        </summary>
+
+        <div class="bar" style="margin:6px 0">
+
+          <i id="pcb"></i>
+
+        </div>
+
+        <div class="g">
+
+          <div>
+
+            <label for="name">Name</label>
+
+            <input id="name" type="text" placeholder="Student name">
+
+          </div>
+
+          <div>
+
+            <label for="level">Level</label>
+
+            <select id="level">
+
+              <option value="">?</option>
+
+              <option value="UG">UG</option>
+
+              <option value="PG">PG</option>
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <label for="field">Field of interest</label>
+
+            <select id="field">
+
+              <option value="">?</option>
+
+              <option value="cs">Computer Science</option>
+
+              <option value="data">Data / AI</option>
+
+              <option value="business">Business</option>
+
+              <option value="eng">Engineering</option>
+
+              <option value="health">Health</option>
+
+              <option value="design">Design</option>
+
+            </select>
+
+          </div>
+
+          <div>
+
+            <label for="pct">Score (%)</label>
+
+            <input id="pct" type="number" min="0" max="100" placeholder="e.g. 75">
+
+          </div>
+
+          <div>
+
+            <label for="ielts">IELTS</label>
+
+            <input id="ielts" type="number" step="0.5" min="0" max="9" placeholder="e.g. 6.5">
+
+          </div>
+
+          <div>
+
+            <label for="budget">Budget (USD / yr)</label>
+
+            <input id="budget" type="number" step="1000" min="0" placeholder="e.g. 30000">
+
+          </div>
+
+          <div>
+
+            <label for="intake">Intake</label>
+
+            <select id="intake">
+
+              <option value="">?</option>
+
+              <option value="Jan">Jan</option>
+
+              <option value="May">May</option>
+
+              <option value="Sep">Sep</option>
+
+            </select>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PREFERRED COUNTRIES -->
+
+        <label style="margin-top:8px">Preferred countries</label>
+
+        <div class="chips" id="cc"></div>
+
+
+
+        <!-- AVOIDED COUNTRIES -->
+
+        <label style="margin-top:8px">Countries to avoid</label>
+
+        <div class="chips" id="avoidcc"></div>
+
+      </details>
+
+    </div>
+
+
+
+    <!-- ASK NEXT -->
+
+    <div class="card ask-next-card">
+
+      <div class="row">
+
+        <strong>Ask Next</strong>
+
+        <span class="mu" title="Question selected by simulated recommendation impact">Impact-based</span>
+
+      </div>
+
+      <div id="askNextContent" style="margin-top:8px">
+
+        <div class="mu">Calculating the highest-impact question...</div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- NATURAL LANGUAGE Q&A (LLM) -->
+
+    <div class="card llm-card">
+
+      <div class="row">
+
+        <strong>Course Copilot AI</strong>
+
+        <span class="mu">Grounded Q&A</span>
+
+      </div>
+
+      <div class="mu llm-description">
+
+        Ask questions about courses, eligibility, fees, intakes, comparisons, or alternatives.
+
+      </div>
+
+      <div id="llmConversation" class="llm-conversation">
+
+        <div class="llm-empty">
+
+          <div class="llm-empty-title">Ask about the student's options</div>
+
+          <div class="mu">
+
+            Example: "Which affordable data science courses can this student consider?"
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <div class="llm-input-area">
+
+        <textarea
+
+          id="llmQuestion"
+
+          class="llm-question"
+
+          rows="2"
+
+          maxlength="500"
+
+          placeholder="Ask a course question... (Enter to send, Shift+Enter for new line)"
+
+        ></textarea>
+
+        <div class="row llm-actions">
+
+          <span id="llmStatus" class="mu">Grounded in course data</span>
+
+          <button id="llmAskBtn" class="primary" type="button">Ask</button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- COURSE DATA STATUS -->
+
+    <div class="card data-status-card">
+
+      <div class="row">
+
+        <strong>Course data</strong>
+
+        <span id="courseDataStatus" class="mu">Checking...</span>
+
+      </div>
+
+      <div id="courseDataDetails" class="mu" style="margin-top:5px"></div>
+
+    </div>
+
+
+
+    <!-- TABS -->
+
+    
+    <!-- SAVED STUDENTS -->
+    <div class="card saved-students-card">
+      <div class="saved-students-header">
+        <div>
+          <strong>Saved Students</strong>
+          <div id="savedStudentsStatus" class="mu">0 saved</div>
+        </div>
+        <button id="newStudentBtn" class="btn" type="button">+ New Student</button>
+      </div>
+
+      <div id="savedStudentsList">
+        <div class="mu">Loading saved students...</div>
+      </div>
+    </div>
+
+    <!-- SESSION HISTORY -->
+    <div class="card">
+      <details>
+        <summary>Session History</summary>
+        <div id="sessionHistoryList" style="margin-top:8px">
+          <div class="mu">No session selected.</div>
+        </div>
+      </details>
+    </div>
+
+<div class="tabs">
+
+      <button data-t="rec" class="on" type="button">Recommend</button>
+
+      <button data-t="search" type="button">Search</button>
+
+      <button data-t="short" type="button">Shortlist (<span id="sn">0</span>)</button>
+
+    </div>
+
+
+
+    <div id="view"></div>
+
+  </div>
+
+
+
+  <!-- EXTENSION SCRIPTS IN CORRECT DEPENDENCY ORDER -->
+
+  <script src="courseData.js"></script>
+
+  <script src="courses.js"></script>
+
+  <script src="quickCapture.js"></script>
+
+  <script src="askNext.js"></script>
+
+  <script src="llmQuery.js"></script>
+
+  <script src="llmClient.js"></script>
+
+  <script src="profileStore.js"></script>
+  <script src="coursePlanning.js"></script>
+  <script src="sidepanel.js"></script>
+
+</body>
+
+</html>
