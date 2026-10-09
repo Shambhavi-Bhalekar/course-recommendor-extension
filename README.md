@@ -4,6 +4,8 @@ Course Copilot is a Chrome Extension built to assist education counsellors durin
 
 It helps counsellors capture student requirements, recommend suitable courses, compare shortlisted options, estimate costs, check deadlines, identify scholarship opportunities, explore post-study work options and careers, and ask AI-powered questions grounded in the available course data.
 
+Demo Link : https://drive.google.com/file/d/1d6-YU-5Ikcouhf2c4YoBt4ooG3BzxqQl/view?usp=sharing
+
 ---
 
 ## Features
@@ -24,7 +26,6 @@ Create a student profile using:
 
 The profile is used to calculate course-fit recommendations.
 
-Demo Link : https://drive.google.com/file/d/1d6-YU-5Ikcouhf2c4YoBt4ooG3BzxqQl/view?usp=sharing
 
 ### 2. Quick Capture
 
