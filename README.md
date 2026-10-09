@@ -24,6 +24,8 @@ Create a student profile using:
 
 The profile is used to calculate course-fit recommendations.
 
+Demo Link : https://drive.google.com/file/d/1d6-YU-5Ikcouhf2c4YoBt4ooG3BzxqQl/view?usp=sharing
+
 ### 2. Quick Capture
 
 Quick Capture allows counsellors to quickly record information mentioned by a student during a counselling conversation.
